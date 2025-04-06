@@ -13,10 +13,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('role');
+            $table->integer('biometricID');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->date('birthday');
+            $table->enum('sex', ['male', 'female']);
+            $table->enum('civil_status', ['single', 'married', 'divorced', 'widowed']);
+            $table->string('email');
+            $table->string('mobile_number');
+            $table->string('telephone_number');
+            $table->enum('medical_doctor', ['Yes', 'No']);
+            $table->string('employment_status');
+            $table->string('division');
+            $table->string('department');
+            $table->string('position');
+            $table->string('prc_license_number'); // is the data here is from user details?
+            $table->date('expiration_date'); // is the data here is from user details?
+            $table->string('emr_sdn_user_profile'); // is the data here is from user details?
             $table->rememberToken();
             $table->timestamps();
         });

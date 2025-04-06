@@ -18,9 +18,23 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'role',
+        'biometricID',
         'name',
+        'birthday',
+        'sex',
+        'civil_status',
         'email',
-        'password',
+        'mobile_number',
+        'telephone_number',
+        'medical_doctor',
+        'employment_status',
+        'division',
+        'department',
+        'position',
+        'prc_license_number',
+        'expiration_date',
+        'emr_sdn_user_profile',
     ];
 
     /**
