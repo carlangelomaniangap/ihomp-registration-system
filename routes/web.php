@@ -24,7 +24,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/requests/internet', [InternetRequestsController::class,'index'])->name('admin.requests.internet');
+    Route::get('/admin/requests/internet/show', [InternetRequestsController::class,'show'])->name('admin.requests.internet.show');
+    
     Route::get('/admin/requests/system', [SystemRequestsController::class,'index'])->name('admin.requests.system');
+    Route::get('/admin/requests/system/show', [SystemRequestsController::class,'show'])->name('admin.requests.system.show');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
