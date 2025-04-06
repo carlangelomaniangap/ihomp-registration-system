@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 // admin
+use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\InternetRequestsController;
 use App\Http\Controllers\admin\SystemRequestsController;
 
@@ -28,5 +29,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/request/internet', [InternetRequestController::class,'index'])->name('user.request.internet');
+    Route::post('/user/request/internet/store', [InternetRequestController::class,'store'])->name('user.request.internet.store');
+
     Route::get('/user/request/system', [SystemRequestController::class,'index'])->name('user.request.system');
+    Route::post('/user/request/system/store', [SystemRequestController::class,'store'])->name('user.request.system.store');
 });
