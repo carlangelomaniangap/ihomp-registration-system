@@ -23,6 +23,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admin.dashboard.index');
+
     Route::get('/admin/requests/internet', [InternetRequestsController::class,'index'])->name('admin.requests.internet');
     Route::get('/admin/requests/internet/show', [InternetRequestsController::class,'show'])->name('admin.requests.internet.show');
     

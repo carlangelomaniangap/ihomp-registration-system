@@ -8,6 +8,7 @@
     <div class="space-y-1">
         @auth
             @if (auth()->user()->role === 'admin')
+                <a href="{{ route('admin.dashboard.index') }}" class="flex items-center px-2 py-2 rounded hover:bg-[#1486a2] transition duration-300"><img src="{{ asset('icons/home.svg') }}" alt="Home" class="mr-2">Dashboard</a>
                 <a href="{{ route('admin.requests.internet') }}" class="flex items-center px-2 py-2 rounded hover:bg-[#1486a2] transition duration-300"><img src="{{ asset('icons/wifi.svg') }}" alt="Wifi" class="mr-2">Internet Requests</a>
                 <a href="{{ route('admin.requests.system') }}" class="flex items-center px-2 py-2 rounded hover:bg-[#1486a2] transition duration-300"><img src="{{ asset('icons/monitor.svg') }}" alt="Monitor" class="mr-2">System Requests</a>
             @elseif (auth()->user()->role === 'user')

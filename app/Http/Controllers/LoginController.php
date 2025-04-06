@@ -30,7 +30,7 @@ class LoginController extends Controller {
                     'success' => true,
                     'message' => 'Login Successful',
                     'name' => $user->name,
-                    'redirect' => route('admin.requests.internet')
+                    'redirect' => route('admin.dashboard.index')
                 ]);
             } else if ($user->role == 'user') {
                 return response()->json([
