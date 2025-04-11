@@ -8,7 +8,7 @@
         <h1 class="text-3xl font-semibold">Dashboard</h1>
     </header>
 
-    <section>
+    <section class="mx-auto p-6 my-6">
         
     </section>
 
