@@ -18,22 +18,23 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('medical_doctor', ['Yes', 'No']);
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->date('birthday');
             $table->enum('sex', ['Male', 'Female']);
             $table->enum('civil_status', ['Single', 'Married', 'Divorced', 'Widowed']);
             $table->string('email');
             $table->string('mobile_number');
             $table->string('telephone_number');
-            $table->string('division');
+            $table->enum('division', ['ANCILLARY', 'FINANCE', 'HOPS', 'MCC', 'MEDICAL', 'NURSING']);
             $table->string('department');
             $table->string('position');
-            $table->string('prc_license_number'); // is the data here is from user details?
-            $table->date('expiration_date'); // is the data here is from user details?
+            $table->string('prc_license_number');
+            $table->date('expiration_date');
             $table->string('employment_status');
             $table->string('systems_to_be_enrolled');
-            $table->string('emr_sdn_user_profile'); // is the data here is from user details?
-            $table->string('pin_code');
+            $table->string('emr_sdn_user_profile');
+            $table->integer('pin_code');
             $table->timestamps();
         });
     }

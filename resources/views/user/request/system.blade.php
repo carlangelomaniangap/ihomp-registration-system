@@ -13,7 +13,8 @@
             <input type="hidden" name="role" id="role" value="{{ auth()->user()->role }}">
             <input type="hidden" name="biometricID" id="biometricID" value="{{ auth()->user()->biometricID }}">
             <input type="hidden" name="medical_doctor" id="medical_doctor" value="{{ auth()->user()->medical_doctor }}">
-            <input type="hidden" name="name" id="name" value="{{ auth()->user()->name }}">
+            <input type="hidden" name="first_name" id="first_name" value="{{ auth()->user()->first_name }}">
+            <input type="hidden" name="last_name" id="last_name" value="{{ auth()->user()->last_name }}">
             <input type="hidden" name="birthday" id="birthday" value="{{ auth()->user()->birthday }}">
             <input type="hidden" name="sex" id="sex" value="{{ auth()->user()->sex }}">
             <input type="hidden" name="civil_status" id="civil_status" value="{{ auth()->user()->civil_status }}">
@@ -28,7 +29,7 @@
 
             <div class="mt-4">
                 <label for="username" class="block font-semibold text-gray-700">Username <sup class="text-red-500">*</sup></label>
-                <input type="text" name="username" id="username" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="text" name="username" id="username" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
             </div>
 
             <div class="mt-4">
@@ -38,31 +39,31 @@
 
             <div class="mt-4">
                 <label for="email" class="block font-semibold text-gray-700">Email <sup class="text-red-500">*</label>
-                <input type="email" name="email" id="email" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="email" name="email" id="email" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
             </div>
 
             <div class="mt-4">
                 <label for="mobile_number" class="block font-semibold text-gray-700">Mobile Number <sup class="text-red-500">*</label>
-                <input type="text" name="mobile_number" id="mobile_number" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="number" name="mobile_number" id="mobile_number" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             </div>
 
             <div class="mt-4">
-                <label class="block font-semibold text-gray-700">Systems to be Enrolled <sup class="text-red-500">*</sup></label>
+                <p class="block font-semibold text-gray-700">Systems to be Enrolled <sup class="text-red-500">*</sup></p>
 
                 <div class="grid grid-cols-1 gap-2 mt-2">
                     <div>
                         <input type="checkbox" name="systems_to_be_enrolled[]" id="EMR-SDN" value="EMR-SDN">
-                        <label for="EMR-SDN">EMR-SDN</label>
+                        <label for="EMR-SDN" class="text-gray-700">EMR-SDN</label>
                     </div>
 
                     <div>
                         <input type="checkbox" name="systems_to_be_enrolled[]" id="HIMS" value="HIMS">
-                        <label for="HIMS">HIMS</label>
+                        <label for="HIMS" class="text-gray-700">HIMS</label>
                     </div>
 
                     <div>
                         <input type="checkbox" name="systems_to_be_enrolled[]" id="PACS-RIS" value="PACS-RIS">
-                        <label for="PACS-RIS">PACS-RIS</label>
+                        <label for="PACS-RIS" class="text-gray-700">PACS-RIS</label>
                     </div>
                 </div>
             </div>
@@ -87,6 +88,17 @@
             $('#systemRequestForm').submit(function (e) {
                 e.preventDefault();
 
+                let selectedSystems = $('input[name="systems_to_be_enrolled[]"]:checked');
+
+                if (selectedSystems.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Required Field',
+                        text: 'Please select at least one under Systems to be Enrolled.'
+                    });
+                    return;
+                }
+
                 let data = {
                     _token: "{{ csrf_token() }}",
                     role: $('#role').val(),
@@ -94,7 +106,8 @@
                     username: $('#username').val(),
                     password: $('#password').val(),
                     medical_doctor: $('#medical_doctor').val(),
-                    name: $('#name').val(),
+                    first_name: $('#first_name').val(),
+                    last_name: $('#last_name').val(),
                     birthday: $('#birthday').val(),
                     sex: $('#sex').val(),
                     civil_status: $('#civil_status').val(),
@@ -124,16 +137,25 @@
                         if (response.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Submitted successfully!',
+                                title: response.message,
+                                text: 'System Request for ' + response.first_name + ' ' + response.last_name,
                                 showConfirmButton: false,
-                                timer: 1000
+                                timer: 1500
                             }).then((result) => {
                                 window.location.href = response.redirect
                             });
-                        } else {
+                        } else if (response.warning) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: response.message,
+                                text:  'Please choose another username.'
+                                });
+                            return;
+                        }else if (response.error) {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Submitted Failed',
+                                title: response.message,
+                                text: 'Your Pin Code is invalid. Please try again.'
                             });
                         }
                     }

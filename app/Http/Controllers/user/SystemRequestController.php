@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
 use App\Models\SystemRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -15,13 +16,17 @@ class SystemRequestController extends Controller {
     }
 
     public function store(Request $request) {
+
+        $user = Auth::user();
+
         $request->validate([
             'role' => 'required|string',
             'biometricID' => 'required|integer',
             'username' => 'required|string',
             'password' => 'required|string',
             'medical_doctor' => 'required|string|in:Yes,No',
-            'name' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'birthday' => 'required|date',
             'sex' => 'required|string',
             'civil_status' => 'required|string',
@@ -36,8 +41,23 @@ class SystemRequestController extends Controller {
             'employment_status' => 'required|string',
             'systems_to_be_enrolled' => 'required|array|min:1',
             'emr_sdn_user_profile' => 'required|string',
-            'pin_code' => 'required',
+            'pin_code' => 'required|integer',
         ]);
+
+        $username = SystemRequest::where('username', $request->username)->exists();
+        $admin = User::where('role', 'admin')->first();
+
+        if ($username) {
+            return response()->json([
+                'warning' => true,
+                'message' => 'Username already exists'
+            ]);
+        } else if ($request->pin_code != $admin->biometricID) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Submission Failed',
+            ]);
+        }
 
         SystemRequest::create([
             'role' => $request->input('role'),
@@ -45,7 +65,8 @@ class SystemRequestController extends Controller {
             'username' => $request->input('username'),
             'password' => $request->input('password'),
             'medical_doctor' => $request->input('medical_doctor'),
-            'name' => $request->input('name'),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
             'birthday' => $request->input('birthday'),
             'sex' => $request->input('sex'),
             'civil_status' => $request->input('civil_status'),
@@ -65,7 +86,9 @@ class SystemRequestController extends Controller {
 
         return response()->json([
             'success' => true,
-            'message' => 'System request submitted successfully!',
+            'message' => 'Submission Successful!',
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
             'redirect' => route('user.request.system')
         ]);
     }

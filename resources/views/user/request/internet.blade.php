@@ -12,7 +12,8 @@
         <form id="internetRequestForm">
             <input type="hidden" name="role" id="role" value="{{ auth()->user()->role }}">
             <input type="hidden" name="biometricID" id="biometricID" value="{{ auth()->user()->biometricID }}">
-            <input type="hidden" name="name" id="name" value="{{ auth()->user()->name }}">
+            <input type="hidden" name="first_name" id="first_name" value="{{ auth()->user()->first_name }}">
+            <input type="hidden" name="last_name" id="last_name" value="{{ auth()->user()->last_name }}">
             <input type="hidden" name="medical_doctor" id="medical_doctor" value="{{ auth()->user()->medical_doctor }}">
             <input type="hidden" name="employment_status" id="employment_status" value="{{ auth()->user()->employment_status }}">
             <input type="hidden" name="division" id="division" value="{{ auth()->user()->division }}">
@@ -23,8 +24,11 @@
                 <label for="request_number" class="block font-semibold text-gray-700">Request Number <sup class="text-red-500">*</sup></label>
                 <select name="request_number" id="request_number" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                     <option selected disabled value="">Select Here</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="MIS-RIC-2014">MIS-RIC-2014</option>
+                    <option value="MIS-RIC-2015">MIS-RIC-2015</option>
+                    <option value="MIS-RIC-2016">MIS-RIC-2016</option>
+                    <option value="MIS-RIC-2017">MIS-RIC-2017</option>
+                    <option value="MIS-RIC-2018">MIS-RIC-2018</option>
                 </select>
             </div>
 
@@ -34,38 +38,38 @@
             </div>
 
             <div class="mt-4">
-                <label for="device_type" class="block font-semibold text-gray-700">Device Type <sup class="text-red-500">*</sup></label>
+                <p class="block font-semibold text-gray-700">Device Type <sup class="text-red-500">*</sup></p>
                 <em class="block text-gray-500 text-sm mb-2">Please select the correct device for validation.</em>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div>
-                        <input type="radio" name="device_type" id="AndroidSmartphone" value="AndroidSmartphone" required>
-                        <label for="AndroidSmartphone" class="">Android Smartphone</label>
+                        <input type="radio" name="device_type" id="AndroidSmartphone" value="Android Smartphone" required>
+                        <label for="AndroidSmartphone" class="text-gray-700">Android Smartphone</label>
                     </div>
 
                     <div>
-                        <input type="radio" name="device_type" id="AndroidTablet" value="AndroidTablet" required>
-                        <label for="AndroidTablet" class="">Android Tablet</label>
+                        <input type="radio" name="device_type" id="AndroidTablet" value="Android Tablet" required>
+                        <label for="AndroidTablet" class="text-gray-700">Android Tablet</label>
                     </div>
 
                     <div>
-                        <input type="radio" name="device_type" id="WindowsLaptop" value="WindowsLaptop" required>
-                        <label for="WindowsLaptop" class="">Windows Laptop</label>
+                        <input type="radio" name="device_type" id="WindowsLaptop" value="Windows Laptop" required>
+                        <label for="WindowsLaptop" class="text-gray-700">Windows Laptop</label>
                     </div>
 
                     <div>
                         <input type="radio" name="device_type" id="iPhone" value="iPhone" required>
-                        <label for="iPhone" class="">iPhone</label>
+                        <label for="iPhone" class="text-gray-700">iPhone</label>
                     </div>
 
                     <div>
                         <input type="radio" name="device_type" id="iPad" value="iPad" required>
-                        <label for="iPad" class="">iPad</label>
+                        <label for="iPad" class="text-gray-700">iPad</label>
                     </div>
 
                     <div>
                         <input type="radio" name="device_type" id="MacBook" value="MacBook" required>
-                        <label for="MacBook" class="">MacBook</label>
+                        <label for="MacBook" class="text-gray-700">MacBook</label>
                     </div>
                 </div>
             </div>
@@ -74,6 +78,18 @@
                 <label for="wifi_mac_address" class="block font-semibold text-gray-700">Wi-Fi MAC Address <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Example: AA:BB:CC:DD:EE:11</em>
                 <input type="text" name="wifi_mac_address" id="wifi_mac_address" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+
+            <div class="mt-4 p-2 border border-gray-300 rounded">
+                <h1 class="font-semibold text-gray-700">How to get Wi-Fi MAC Address?</h1>
+                <em class="mt-4 text-sm text-gray-700">Please connect your device to <b>BGHMC Wi-Fi</b> with a password <b>123456789</b> then switch to <u>Device MAC Address</u> for android and switch OFF to <u>Private Wi-Fi MAC Address</u> for iPhones.</em>
+
+                <ul class="mt-4 text-sm text-gray-700">
+                    <li><b>iPhone/iPad</b> Settings > General > About > Wi-Fi MAC Address</li>
+                    <li><b>Android/Table</b> Settings > About Phone > Status Information > Phone Wi-Fi MAC Address</li>
+                    <li><b>MAC O</b> Click the Wi-Fi icon (Upper Right) > Network Perefences > Advanced > Wi-Fi MAC Address</li>
+                    <li><b>Windows OS</b> Search bar (Lower Left) > cmd > get mac -v > look for Wi-Fi > Physical Address column</li>
+                </ul>
             </div>
 
             <div class="mt-4">
@@ -97,11 +113,23 @@
             $('#internetRequestForm').submit(function (e) {
                 e.preventDefault();
 
+                let selectedDeviceType = $('input[name="device_type"]:checked');
+
+                if (selectedDeviceType.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Required Field',
+                        text: 'Please select Device Type.'
+                    });
+                    return;
+                }
+
                 let data = {
                     _token: "{{ csrf_token() }}",
                     role: $('#role').val(),
                     biometricID: $('#biometricID').val(),
-                    name: $('#name').val(),
+                    first_name: $('#first_name').val(),
+                    last_name: $('#last_name').val(),
                     medical_doctor: $('#medical_doctor').val(),
                     employment_status: $('#employment_status').val(),
                     division: $('#division').val(),
@@ -124,16 +152,18 @@
                         if (response.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Submitted successfully!',
+                                title: response.message,
+                                text: 'Internet Request for ' + response.first_name + ' ' + response.last_name,
                                 showConfirmButton: false,
-                                timer: 1000
+                                timer: 1500
                             }).then((result) => {
                                 window.location.href = response.redirect
                             });
                         } else {
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Submitted Failed',
+                                title: response.message,
+                                text: 'Your Pin Code is invalid. Please try again.'
                             });
                         }
                     }
