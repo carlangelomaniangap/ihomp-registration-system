@@ -10,48 +10,52 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller {
 
     public function login(Request $request) {
-        
-        $credentials = $request->validate([
+
+        $request->validate([
             'biometricID' => 'required|integer',
-            'name'=> 'required|string',
+            'first_name'=> 'required|string',
         ]);
 
-        $user = User::where([
-            'biometricID' => $credentials['biometricID'],
-            'name' => $credentials['name']
-        ])->first();
+        $user = User::where('biometricID', $request->input('biometricID'))
+        ->where('first_name', $request->input('first_name'))
+        ->first();
 
         if ($user) {
-            Auth::login($user); 
+            $remember = $request->has('remember');
+            Auth::login($user, $remember); 
             $request ->session()->regenerate();
 
             if ($user->role == 'admin') {
                 return response()->json([
                     'success' => true,
-                    'message' => 'Login Successful',
-                    'name' => $user->name,
+                    'message' => 'Login Successful!',
+                    'first_name' => $user->first_name,
                     'redirect' => route('admin.dashboard.index')
                 ]);
             } else if ($user->role == 'user') {
                 return response()->json([
                     'success' => true,
                     'message' => 'Login Successful',
-                    'name' => $user->name,
+                    'first_name' => $user->first_name,
                     'redirect' => route('user.request.internet')
                 ]);
             }
-        } else {
-            return response()->json([
-                'error' => true,
-                'message' => 'Login Failed',
-                'redirect' => url('/')
-            ]);
         }
+
+        return response()->json([
+            'error' => true,
+            'message' => 'Login Failed',
+            'redirect' => url('/')
+        ]);
     }
 
     public function logout(Request $request) {
 
+        $user = Auth::user();
+
         Auth::logout();
+
+        User::where('id', $user->id)->update(['remember_token' => null]);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

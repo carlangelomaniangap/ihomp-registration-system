@@ -14,11 +14,10 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        // Check if user is logged in and has the correct role
-        if (Auth::user()->role !== $role) {
-            abort(403, 'Unauthorized access.');
+        if (Auth::check() && Auth::user()->role === $role) {
+            return $next($request);
         }
-
-        return $next($request);
+    
+        abort(403, 'Unauthorized access.');
     }
 }

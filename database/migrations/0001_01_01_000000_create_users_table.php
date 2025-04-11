@@ -15,21 +15,22 @@ return new class extends Migration
             $table->id();
             $table->string('role');
             $table->integer('biometricID');
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->date('birthday');
-            $table->enum('sex', ['male', 'female']);
-            $table->enum('civil_status', ['single', 'married', 'divorced', 'widowed']);
+            $table->enum('sex', ['Male', 'Female']);
+            $table->enum('civil_status', ['Single', 'Married', 'Divorced', 'Widowed']);
             $table->string('email');
             $table->string('mobile_number');
             $table->string('telephone_number');
             $table->enum('medical_doctor', ['Yes', 'No']);
             $table->string('employment_status');
-            $table->string('division');
+            $table->enum('division', ['ANCILLARY', 'FINANCE', 'HOPS', 'MCC', 'MEDICAL', 'NURSING']);
             $table->string('department');
             $table->string('position');
-            $table->string('prc_license_number'); // is the data here is from user details?
-            $table->date('expiration_date'); // is the data here is from user details?
-            $table->string('emr_sdn_user_profile'); // is the data here is from user details?
+            $table->string('prc_license_number');
+            $table->date('expiration_date');
+            $table->string('emr_sdn_user_profile');
             $table->rememberToken();
             $table->timestamps();
         });

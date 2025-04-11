@@ -20,7 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'role',
         'biometricID',
-        'name',
+        'first_name',
+        'last_name',
         'birthday',
         'sex',
         'civil_status',
