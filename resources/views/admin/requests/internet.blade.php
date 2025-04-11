@@ -14,7 +14,8 @@
                 <tr>
                     <th class="hidden">ID</th>
                     <th>Biometric ID</th>
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>Medical Doctor</th>
                     <th>Employment Status</th>
                     <th>Division</th>
@@ -47,13 +48,14 @@
                 success: function (response) {
                     console.log(response);
 
-                    let tableBody = '';
+                    let tableBody;
                     response.forEach(function (internetRequests) {
                         tableBody += `
                             <tr>
                                 <td class="hidden">${internetRequests.id}</td>
                                 <td>${internetRequests.biometricID}</td>
-                                <td>${internetRequests.name}</td>
+                                <td>${internetRequests.first_name}</td>
+                                <td>${internetRequests.last_name}</td>
                                 <td>${internetRequests.medical_doctor}</td>
                                 <td>${internetRequests.employment_status}</td>
                                 <td>${internetRequests.division}</td>

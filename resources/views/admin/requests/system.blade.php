@@ -17,7 +17,8 @@
                     <th>Username</th>
                     <th>Password</th>
                     <th>Medical Doctor</th>
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>Birthday</th>
                     <th>Sex</th>
                     <th>Civil Status</th>
@@ -56,7 +57,7 @@
                 success: function (response) {
                     console.log(response);
 
-                    let tableBody = '';
+                    let tableBody;
                     response.forEach(function (systemRequests) {
                         tableBody += `
                             <tr>
@@ -65,7 +66,8 @@
                                 <td>${systemRequests.username}</td>
                                 <td>${systemRequests.password}</td>
                                 <td>${systemRequests.medical_doctor}</td>
-                                <td>${systemRequests.name}</td>
+                                <td>${systemRequests.first_name}</td>
+                                <td>${systemRequests.last_name}</td>
                                 <td>${systemRequests.birthday}</td>
                                 <td>${systemRequests.sex}</td>
                                 <td>${systemRequests.civil_status}</td>
