@@ -12,8 +12,8 @@ class InternetRequestsController extends Controller {
 
     public function show() {
 
-        $internetRequests = InternetRequest::all();
+        $internetRequests = InternetRequest::orderBy('id', 'asc')->get();
 
-        return response()->json($internetRequests);
+        return response()->json([ 'data' => $internetRequests ]);
     }
 }

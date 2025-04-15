@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('mobile_number');
             $table->string('telephone_number');
             $table->enum('medical_doctor', ['Yes', 'No']);
-            $table->string('employment_status');
+            $table->enum('employment_status', ['Regular/Permanent','Job Order','Temporary/COS','Medical Intern']);
             $table->enum('division', ['ANCILLARY', 'FINANCE', 'HOPS', 'MCC', 'MEDICAL', 'NURSING']);
             $table->string('department');
             $table->string('position');

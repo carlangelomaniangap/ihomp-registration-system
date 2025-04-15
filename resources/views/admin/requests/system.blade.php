@@ -12,7 +12,6 @@
         <table id="systemRequests" class="row-border stripe hover border border-gray-300">
             <thead>
                 <tr>
-                    <th class="hidden">ID</th>
                     <th>Biometric ID</th>
                     <th>Username</th>
                     <th>Password</th>
@@ -37,9 +36,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-
-            </tbody>
         </table>
     </section>
 
@@ -50,50 +46,43 @@
 
     <script>
         $(document).ready( function () {
-
-            $.ajax({
-                url: "{{ route('admin.requests.system.show') }}",
-                type: "GET",
-                success: function (response) {
-                    console.log(response);
-
-                    let tableBody;
-                    response.forEach(function (systemRequests) {
-                        tableBody += `
-                            <tr>
-                                <td class="hidden">${systemRequests.id}</td>
-                                <td>${systemRequests.biometricID}</td>
-                                <td>${systemRequests.username}</td>
-                                <td>${systemRequests.password}</td>
-                                <td>${systemRequests.medical_doctor}</td>
-                                <td>${systemRequests.first_name}</td>
-                                <td>${systemRequests.last_name}</td>
-                                <td>${systemRequests.birthday}</td>
-                                <td>${systemRequests.sex}</td>
-                                <td>${systemRequests.civil_status}</td>
-                                <td>${systemRequests.email}</td>
-                                <td>${systemRequests.mobile_number}</td>
-                                <td>${systemRequests.telephone_number}</td>
-                                <td>${systemRequests.division}</td>
-                                <td>${systemRequests.department}</td>
-                                <td>${systemRequests.position}</td>
-                                <td>${systemRequests.prc_license_number}</td>
-                                <td>${systemRequests.expiration_date}</td>
-                                <td>${systemRequests.employment_status}</td>
-                                <td>${systemRequests.systems_to_be_enrolled}</td>
-                                <td>${systemRequests.emr_sdn_user_profile}</td>
-                                <td>${systemRequests.pin_code}</td>
-                                <td>
-                                    <button class="text-white font-semibold bg-[#1486a2] px-2 py-2 rounded hover:bg-[#0c6980] transition duration-300">Print</button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    $('#systemRequests tbody').html(tableBody);
-
-                    $('#systemRequests').DataTable();
-                }
+            let table = $('#systemRequests').DataTable({
+                ajax: '/admin/requests/system/show',
+                columns: [
+                    { data: 'biometricID' },
+                    { data: 'username' },
+                    { data: 'password' },
+                    { data: 'medical_doctor' },
+                    { data: 'first_name' },
+                    { data: 'last_name' },
+                    { data: 'birthday' },
+                    { data: 'sex' },
+                    { data: 'civil_status' },
+                    { data: 'email' },
+                    { data: 'mobile_number' },
+                    { data: 'telephone_number' },
+                    { data: 'division' },
+                    { data: 'department' },
+                    { data: 'position' },
+                    { data: 'prc_license_number' },
+                    { data: 'expiration_date' },
+                    { data: 'employment_status' },
+                    { data: 'systems_to_be_enrolled' },
+                    { data: 'emr_sdn_user_profile' },
+                    { data: 'pin_code' },
+                    {
+                        render:function(data, type, row){
+                            return `<button class="text-white font-semibold bg-[#1486a2] px-2 py-2 rounded hover:bg-[#0c6980] transition duration-300">Print</button>`;
+                        }
+                    }
+                ]
             });
+
+            function refresh() {
+                table.ajax.reload(null, false);
+            }
+
+            setInterval(refresh, 1000);
         });
     </script>
 

@@ -12,8 +12,8 @@ class SystemRequestsController extends Controller {
 
     public function show() {
 
-        $systemRequests = SystemRequest::all();
+        $systemRequests = SystemRequest::orderBy('id', 'asc')->get();
 
-        return response()->json($systemRequests);
+        return response()->json([ 'data' => $systemRequests ]);
     }
 }

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('position');
             $table->string('prc_license_number');
             $table->date('expiration_date');
-            $table->string('employment_status');
+            $table->enum('employment_status', ['Regular/Permanent','Job Order','Temporary/COS','Medical Intern']);
             $table->string('systems_to_be_enrolled');
             $table->string('emr_sdn_user_profile');
             $table->integer('pin_code');

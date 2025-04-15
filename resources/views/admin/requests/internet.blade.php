@@ -12,7 +12,6 @@
         <table id="internetRequests" class="row-border stripe hover border border-gray-300">
             <thead>
                 <tr>
-                    <th class="hidden">ID</th>
                     <th>Biometric ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -28,9 +27,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
-
-            </tbody>
         </table>
     </section>
 
@@ -40,42 +36,35 @@
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
     <script>
-        $(document).ready( function () {
-
-            $.ajax({
-                url: "{{ route('admin.requests.internet.show') }}",
-                type: "GET",
-                success: function (response) {
-                    console.log(response);
-
-                    let tableBody;
-                    response.forEach(function (internetRequests) {
-                        tableBody += `
-                            <tr>
-                                <td class="hidden">${internetRequests.id}</td>
-                                <td>${internetRequests.biometricID}</td>
-                                <td>${internetRequests.first_name}</td>
-                                <td>${internetRequests.last_name}</td>
-                                <td>${internetRequests.medical_doctor}</td>
-                                <td>${internetRequests.employment_status}</td>
-                                <td>${internetRequests.division}</td>
-                                <td>${internetRequests.department}</td>
-                                <td>${internetRequests.position}</td>
-                                <td>${internetRequests.reason}</td>
-                                <td>${internetRequests.device_type}</td>
-                                <td>${internetRequests.wifi_mac_address}</td>
-                                <td>${internetRequests.pin_code}</td>
-                                <td>
-                                    <button class="text-white font-semibold bg-[#1486a2] px-2 py-2 rounded hover:bg-[#0c6980] transition duration-300">Print</button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    $('#internetRequests tbody').html(tableBody);
-
-                    $('#internetRequests').DataTable();
-                }
+        $(document).ready(function(){
+            let table = $('#internetRequests').DataTable({
+                ajax: '/admin/requests/internet/show',
+                columns: [
+                    { data: 'biometricID' },
+                    { data: 'first_name' },
+                    { data: 'last_name' },
+                    { data: 'medical_doctor' },
+                    { data: 'employment_status' },
+                    { data: 'division' },
+                    { data: 'department' },
+                    { data: 'position' },
+                    { data: 'reason' },
+                    { data: 'device_type' },
+                    { data: 'wifi_mac_address' },
+                    { data: 'pin_code' },
+                    {
+                        render: function (data, type, row) {
+                            return `<button class="text-white font-semibold bg-[#1486a2] px-2 py-2 rounded hover:bg-[#0c6980] transition duration-300">Print</button>`;
+                        }
+                    }
+                ]
             });
+
+            function refresh() {
+                table.ajax.reload(null, false);
+            }
+
+            setInterval(refresh, 1000);
         });
     </script>
 
