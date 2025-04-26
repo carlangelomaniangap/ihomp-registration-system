@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('system_requests', function (Blueprint $table) {
             $table->id();
             $table->string('role');
-            $table->integer('biometricID');
+            $table->unsignedInteger('biometricID');
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('medical_doctor', ['Yes', 'No']);
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->enum('employment_status', ['Regular/Permanent','Job Order','Temporary/COS','Medical Intern']);
             $table->string('systems_to_be_enrolled');
             $table->string('emr_sdn_user_profile');
-            $table->integer('pin_code');
+            $table->unsignedInteger('pin_code');
             $table->timestamps();
         });
     }

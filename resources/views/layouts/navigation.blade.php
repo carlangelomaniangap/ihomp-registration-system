@@ -1,4 +1,4 @@
-<nav class="bg-[#0c6980] text-white font-semibold w-52 h-screen flex flex-col p-4 gap-4">
+<nav class="bg-[#0c6980] text-white font-semibold w-64 h-screen flex flex-col p-4 gap-4">
 
     <div class="text-center py-4 border-b border-gray-400">
         <h1 class="text-2xl">IHOMP</h1>

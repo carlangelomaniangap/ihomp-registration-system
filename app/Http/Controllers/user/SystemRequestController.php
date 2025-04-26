@@ -21,7 +21,7 @@ class SystemRequestController extends Controller {
 
         $request->validate([
             'role' => 'required|string',
-            'biometricID' => 'required|integer',
+            'biometricID' => 'required|numeric',
             'username' => 'required|string',
             'password' => 'required|string',
             'medical_doctor' => 'required|string|in:Yes,No',
@@ -31,7 +31,7 @@ class SystemRequestController extends Controller {
             'sex' => 'required|string',
             'civil_status' => 'required|string',
             'email' => 'required|email',
-            'mobile_number' => 'required|string',
+            'mobile_number' => 'required|regex:/^09[0-9]{9}$/',
             'telephone_number' => 'required|string',
             'division' => 'required|string',
             'department' => 'required|string',
@@ -41,18 +41,12 @@ class SystemRequestController extends Controller {
             'employment_status' => 'required|string',
             'systems_to_be_enrolled' => 'required|array|min:1',
             'emr_sdn_user_profile' => 'required|string',
-            'pin_code' => 'required|integer',
+            'pin_code' => 'required|numeric',
         ]);
 
-        $username = SystemRequest::where('username', $request->username)->exists();
         $admin = User::where('role', 'admin')->first();
 
-        if ($username) {
-            return response()->json([
-                'warning' => true,
-                'message' => 'Username already exists'
-            ]);
-        } else if ($request->pin_code != $admin->biometricID) {
+        if ($request->pin_code != $admin->biometricID) {
             return response()->json([
                 'error' => true,
                 'message' => 'Submission Failed',

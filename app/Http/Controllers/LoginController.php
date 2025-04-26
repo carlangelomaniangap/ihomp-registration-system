@@ -12,7 +12,7 @@ class LoginController extends Controller {
     public function login(Request $request) {
 
         $request->validate([
-            'biometricID' => 'required|integer',
+            'biometricID' => 'required|numeric',
             'first_name'=> 'required|string',
         ]);
 

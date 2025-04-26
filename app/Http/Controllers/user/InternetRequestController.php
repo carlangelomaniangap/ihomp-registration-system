@@ -20,7 +20,7 @@ class InternetRequestController extends Controller {
 
         $request->validate([
             'role' => 'required|string',
-            'biometricID' => 'required|integer',
+            'biometricID' => 'required|numeric',
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'medical_doctor' => 'required|in:Yes,No',
@@ -28,11 +28,10 @@ class InternetRequestController extends Controller {
             'division' => 'required|in:ANCILLARY,FINANCE,HOPS,MCC,MEDICAL,NURSING',
             'department' => 'required|string',
             'position' => 'required|string',
-            'request_number' => 'required|string',
             'reason' => 'required|string',
             'device_type' => 'required|in:Android Smartphone,Android Tablet,Windows Laptop,iPhone,iPad,MacBook',
-            'wifi_mac_address' => 'required',
-            'pin_code' => 'required|integer',
+            'wifi_mac_address' => 'required|regex:/^([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2}$/i',
+            'pin_code' => 'required|numeric',
         ]);
 
         $admin = User::where('role', 'admin')->first();
@@ -44,8 +43,13 @@ class InternetRequestController extends Controller {
             ]);
         }
 
+        $lastRequestNumber = InternetRequest::latest('id')->first();
+        $nextRequestNumber = $lastRequestNumber ? ((int)str_replace('MIS-RIC-', '', $lastRequestNumber->request_number)) + 1 : 2014;
+        $RequestNumber = 'MIS-RIC-' . $nextRequestNumber;
+
         InternetRequest::create([
             'role' => $request->input('role'),
+            'request_number' => $RequestNumber,
             'biometricID' => $request->input('biometricID'),
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
@@ -54,7 +58,6 @@ class InternetRequestController extends Controller {
             'division' => $request->input('division'),
             'department' => $request->input('department'),
             'position' => $request->input('position'),
-            'request_number' => $request->input('request_number'),
             'reason' => $request->input('reason'),
             'device_type' => $request->input('device_type'),
             'wifi_mac_address' => $request->input('wifi_mac_address'),

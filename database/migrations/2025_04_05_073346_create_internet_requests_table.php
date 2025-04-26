@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('internet_requests', function (Blueprint $table) {
             $table->id();
             $table->string('role');
-            $table->string('request_number');
-            $table->integer('biometricID');
+            $table->string('request_number')->unique();
+            $table->unsignedInteger('biometricID');
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('medical_doctor', ['Yes', 'No']);
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('reason');
             $table->enum('device_type', ['Android Smartphone', 'Android Tablet', 'Windows Laptop', 'iPhone', 'iPad', 'MacBook']);
             $table->string('wifi_mac_address');
-            $table->integer('pin_code');
+            $table->unsignedInteger('pin_code');
             $table->timestamps();
         });
     }
