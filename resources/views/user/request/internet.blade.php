@@ -21,18 +21,6 @@
             <input type="hidden" name="position" id="position" value="{{ auth()->user()->position }}">
 
             <div class="mt-4">
-                <label for="request_number" class="block font-semibold text-gray-700">Request Number <sup class="text-red-500">*</sup></label>
-                <select name="request_number" id="request_number" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                    <option selected disabled value="">Select Here</option>
-                    <option value="MIS-RIC-2014">MIS-RIC-2014</option>
-                    <option value="MIS-RIC-2015">MIS-RIC-2015</option>
-                    <option value="MIS-RIC-2016">MIS-RIC-2016</option>
-                    <option value="MIS-RIC-2017">MIS-RIC-2017</option>
-                    <option value="MIS-RIC-2018">MIS-RIC-2018</option>
-                </select>
-            </div>
-
-            <div class="mt-4">
                 <label for="reason" class="block font-semibold text-gray-700">Reason <sup class="text-red-500">*</sup></label>
                 <textarea name="reason" id="reason" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Type here..." required></textarea>
             </div>
@@ -77,7 +65,7 @@
             <div class="mt-4">
                 <label for="wifi_mac_address" class="block font-semibold text-gray-700">Wi-Fi MAC Address <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Example: AA:BB:CC:DD:EE:11</em>
-                <input type="text" name="wifi_mac_address" id="wifi_mac_address" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="text" name="wifi_mac_address" id="wifi_mac_address" maxlength="17" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
             </div>
 
             <div class="mt-4 p-2 border border-gray-300 rounded">
@@ -95,7 +83,7 @@
             <div class="mt-4">
                 <label for="pin_code" class="block font-semibold text-gray-700">Confirmed by IHOMP Technical on Duty <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Please enter PIN code</em>
-                <input type="number" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="password" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             </div>
 
             <div class="mt-6 flex justify-center">
@@ -109,6 +97,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.all.min.js"></script>
 
     <script>
+        document.getElementById('wifi_mac_address').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^A-Fa-f0-9]/g, '');
+
+            e.target.value = value.replace(/(.{2})(?=.)/g, '$1:');
+        });
+
+        document.getElementById('pin_code').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
         $(document).ready(function () {
             $('#internetRequestForm').submit(function (e) {
                 e.preventDefault();
@@ -154,8 +152,9 @@
                                 icon: 'success',
                                 title: response.message,
                                 text: 'Internet Request for ' + response.first_name + ' ' + response.last_name,
-                                showConfirmButton: false,
-                                timer: 1500
+                                showCancelButton: true,
+                                confirmButtonText: 'Preview',
+                                cancelButtonText: 'Close',
                             }).then((result) => {
                                 window.location.href = response.redirect
                             });

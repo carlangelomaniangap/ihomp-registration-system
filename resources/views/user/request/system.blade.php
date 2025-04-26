@@ -44,7 +44,7 @@
 
             <div class="mt-4">
                 <label for="mobile_number" class="block font-semibold text-gray-700">Mobile Number <sup class="text-red-500">*</label>
-                <input type="number" name="mobile_number" id="mobile_number" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="tel" name="mobile_number" id="mobile_number" maxlength="11" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
             </div>
 
             <div class="mt-4">
@@ -71,7 +71,7 @@
             <div class="mt-4">
                 <label for="pin_code" class="block font-semibold text-gray-700">Confirmed by IHOMP Technical on Duty <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Please enter PIN code</em>
-                <input type="number" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="password" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             </div>
 
             <div class="mt-6 flex justify-center">
@@ -84,6 +84,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.all.min.js"></script>
 
     <script>
+        document.getElementById('mobile_number').addEventListener('input', function(event) {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        document.getElementById('pin_code').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
         $(document).ready(function () {
             $('#systemRequestForm').submit(function (e) {
                 e.preventDefault();
@@ -139,18 +147,12 @@
                                 icon: 'success',
                                 title: response.message,
                                 text: 'System Request for ' + response.first_name + ' ' + response.last_name,
-                                showConfirmButton: false,
-                                timer: 1500
+                                showCancelButton: true,
+                                confirmButtonText: 'Preview',
+                                cancelButtonText: 'Close',
                             }).then((result) => {
                                 window.location.href = response.redirect
                             });
-                        } else if (response.warning) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: response.message,
-                                text:  'Please choose another username.'
-                                });
-                            return;
                         }else if (response.error) {
                             Swal.fire({
                                 icon: 'error',
