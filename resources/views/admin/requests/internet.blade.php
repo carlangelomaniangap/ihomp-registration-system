@@ -54,7 +54,7 @@
                     { data: 'pin_code' },
                     {
                         render: function (data, type, row) {
-                            return `<button class="text-white font-semibold bg-[#1486a2] px-2 py-2 rounded hover:bg-[#0c6980] transition duration-300">Print</button>`;
+                            return `<a href="/request/internet/print/${row.id}" class="text-white font-semibold bg-[#1486a2] px-2 py-2 rounded hover:bg-[#0c6980] transition duration-300">Print</a>`;
                         }
                     }
                 ]

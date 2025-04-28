@@ -1,9 +1,10 @@
 <?php
 
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PrintInternetRequestController;
 // admin
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\InternetRequestsController;
@@ -20,6 +21,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::get('/request/internet/print/{id}', [PrintInternetRequestController::class, 'print'])->name('print.request.internet');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
