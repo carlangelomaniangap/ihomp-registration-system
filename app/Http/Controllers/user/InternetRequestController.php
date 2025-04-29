@@ -34,7 +34,7 @@ class InternetRequestController extends Controller {
             'pin_code' => 'required|numeric',
         ]);
 
-        $admin = User::where('role', 'admin')->first();
+        $admin = User::where('role', 'admin')->where('biometricID', $request->pin_code)->first();
 
         if ($request->pin_code != $admin->biometricID) {
             return response()->json([
@@ -47,7 +47,7 @@ class InternetRequestController extends Controller {
         $nextRequestNumber = $lastRequestNumber ? ((int)str_replace('MIS-RIC-', '', $lastRequestNumber->request_number)) + 1 : 2014;
         $RequestNumber = 'MIS-RIC-' . $nextRequestNumber;
 
-        InternetRequest::create([
+        $internetRequest = InternetRequest::create([
             'role' => $request->input('role'),
             'request_number' => $RequestNumber,
             'biometricID' => $request->input('biometricID'),
@@ -67,6 +67,7 @@ class InternetRequestController extends Controller {
         return response()->json([
             'success' => true,
             'message' => 'Submission Successful!',
+            'id' => $internetRequest->id,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'redirect' => route('user.request.internet')

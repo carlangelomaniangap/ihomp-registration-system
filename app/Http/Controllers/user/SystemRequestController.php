@@ -44,7 +44,7 @@ class SystemRequestController extends Controller {
             'pin_code' => 'required|numeric',
         ]);
 
-        $admin = User::where('role', 'admin')->first();
+        $admin = User::where('role', 'admin')->where('biometricID', $request->pin_code)->first();
 
         if ($request->pin_code != $admin->biometricID) {
             return response()->json([
@@ -53,7 +53,7 @@ class SystemRequestController extends Controller {
             ]);
         }
 
-        SystemRequest::create([
+        $systemRequest = SystemRequest::create([
             'role' => $request->input('role'),
             'biometricID' => $request->input('biometricID'),
             'username' => $request->input('username'),
@@ -81,6 +81,7 @@ class SystemRequestController extends Controller {
         return response()->json([
             'success' => true,
             'message' => 'Submission Successful!',
+            'id' => $systemRequest->id,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'redirect' => route('user.request.system')

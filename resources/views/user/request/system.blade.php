@@ -151,7 +151,9 @@
                                 confirmButtonText: 'Preview',
                                 cancelButtonText: 'Close',
                             }).then((result) => {
-                                window.location.href = response.redirect
+                                if (result.isConfirmed) {
+                                    window.location.href = `/request/system/print/${response.id}`;
+                                }
                             });
                         }else if (response.error) {
                             Swal.fire({
