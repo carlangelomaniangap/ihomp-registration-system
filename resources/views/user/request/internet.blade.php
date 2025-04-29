@@ -158,6 +158,8 @@
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     window.location.href = `/request/internet/print/${response.id}`;
+                                } else {
+                                    window.location.href = response.redirect
                                 }
                             });
                         } else {

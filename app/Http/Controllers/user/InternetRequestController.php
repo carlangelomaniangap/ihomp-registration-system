@@ -36,7 +36,7 @@ class InternetRequestController extends Controller {
 
         $admin = User::where('role', 'admin')->where('biometricID', $request->pin_code)->first();
 
-        if ($request->pin_code != $admin->biometricID) {
+        if (!$admin) {
             return response()->json([
                 'error' => true,
                 'message' => 'Submission Failed',
