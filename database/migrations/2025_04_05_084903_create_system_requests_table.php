@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('role');
             $table->unsignedInteger('biometricID');
-            $table->string('username')->unique();
+            $table->string('username');
             $table->string('password');
             $table->enum('medical_doctor', ['Yes', 'No']);
             $table->string('first_name');

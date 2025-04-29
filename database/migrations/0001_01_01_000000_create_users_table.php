@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('position');
             $table->string('prc_license_number');
             $table->date('expiration_date');
-            $table->string('emr_sdn_user_profile');
+            $table->enum('emr_sdn_user_profile', ['User', 'Pharmacy', 'Social Service', 'Cashier', 'Nurse', 'Doctor']);
             $table->rememberToken();
             $table->timestamps();
         });

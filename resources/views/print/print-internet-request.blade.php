@@ -6,7 +6,17 @@
 
     <section>
         <div class="flex justify-between items-center p-4 print:hidden">
-            <a href="{{ route('admin.requests.internet') }}" class="text-sm py-2 px-4 bg-[#0c6980] text-white rounded hover:bg-[#1486a2] transition duration-300">Back to Internet Requests</a>
+            @auth
+                @if (Auth::user()->role === 'admin')
+                    <a href="{{ route('admin.requests.internet') }}" class="text-sm py-2 px-4 bg-[#0c6980] text-white rounded hover:bg-[#1486a2] transition duration-300">
+                        Back to Internet Requests
+                    </a>
+                @elseif (Auth::user()->role === 'user')
+                    <a href="{{ route('user.request.internet') }}" class="text-sm py-2 px-4 bg-[#0c6980] text-white rounded hover:bg-[#1486a2] transition duration-300">
+                        Back to Internet Request
+                    </a>
+                @endif
+            @endauth
 
             <button onclick="window.print()" class="text-sm py-2 px-4 bg-[#0c6980] text-white rounded hover:bg-[#1486a2] transition duration-300">Print</button>
         </div>
