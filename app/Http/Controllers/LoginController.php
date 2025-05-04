@@ -16,13 +16,13 @@ class LoginController extends Controller {
             'first_name'=> 'required|string',
         ]);
 
-        $user = User::where('biometricID', $request->input('biometricID'))
-        ->where('first_name', $request->input('first_name'))
-        ->first();
+        $user = User::where('biometricID', $request->biometricID)
+                    ->where('first_name', $request->first_name)
+                    ->first();
 
         if ($user) {
             $remember = $request->has('remember');
-            Auth::login($user, $remember); 
+            Auth::login($user, $remember);
             $request ->session()->regenerate();
 
             if ($user->role == 'admin') {
@@ -51,15 +51,22 @@ class LoginController extends Controller {
 
     public function logout(Request $request) {
 
-        $user = Auth::user();
+        if (Auth::check()) {
+            $user = Auth::user();
 
-        Auth::logout();
+            Auth::logout();
 
-        User::where('id', $user->id)->update(['remember_token' => null]);
+            User::where('id', $user->id)->update(['remember_token' => null]);
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
 
-        return redirect('/');
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout Successful',
+            'first_name' => $user->first_name,
+            'redirect' => route('home')
+        ]);
     }
 }

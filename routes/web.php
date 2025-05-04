@@ -16,7 +16,7 @@ use App\Http\Controllers\user\InternetRequestController;
 use App\Http\Controllers\user\SystemRequestController;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', [HomeController::class,'index']);
+    Route::get('/', [HomeController::class,'index'])->name('home');
     Route::post('/', [LoginController::class,'login'])->name('login');
 });
 
@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class,'index'])->name('admin.dashboard.index');
+    Route::get('/admin/dashboard/refresh', [DashboardController::class, 'refresh'])->name('admin.dashboard.refresh');
 
     Route::get('/admin/requests/internet', [InternetRequestsController::class,'index'])->name('admin.requests.internet');
     Route::get('/admin/requests/internet/show', [InternetRequestsController::class,'show'])->name('admin.requests.internet.show');

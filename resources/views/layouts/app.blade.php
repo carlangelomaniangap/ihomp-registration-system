@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-screen flex">
-    <nav class="fixed sticky top-0">
+    <nav class="sticky top-0">
         @include('layouts.navigation')
     </nav>
 
