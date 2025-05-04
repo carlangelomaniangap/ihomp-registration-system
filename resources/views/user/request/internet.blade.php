@@ -4,8 +4,8 @@
 
 @section('content')
 
-    <header class="bg-white text-[#0c6980] sticky top-0 text-center p-6 border-b border-gray-300 w-full z-10 shadow-md">
-        <h1 class="text-3xl font-semibold">Internet Request</h1>
+    <header class="bg-white text-[#0c6980] sticky top-0 text-center p-4 border-b border-gray-300 w-full z-10 shadow-md">
+        <h1 class="text-xl md:text-2xl font-semibold">Internet Request</h1>
     </header>
 
     <section class="max-w-sm md:max-w-md mx-auto bg-white shadow-md rounded-xl p-6 my-6">
@@ -93,8 +93,8 @@
         </form>
     </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         document.getElementById('wifi_mac_address').addEventListener('input', function(e) {
@@ -153,7 +153,7 @@
                                 title: response.message,
                                 text: 'Internet Request for ' + response.first_name + ' ' + response.last_name,
                                 showCancelButton: true,
-                                confirmButtonText: 'Preview',
+                                confirmButtonText: 'Print',
                                 cancelButtonText: 'Close',
                             }).then((result) => {
                                 if (result.isConfirmed) {
