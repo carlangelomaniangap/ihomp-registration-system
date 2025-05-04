@@ -14,5 +14,17 @@
     body {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+        overflow: visible !important;
+        height: auto !important;
+    }
+
+    @page {
+        margin: 0;
+        size: auto;
+        padding: 6rem;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
     }
 }
