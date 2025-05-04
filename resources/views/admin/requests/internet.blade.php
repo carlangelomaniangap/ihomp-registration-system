@@ -4,11 +4,11 @@
 
 @section('content')
 
-    <header class="bg-white text-[#0c6980] sticky top-0 text-center p-6 border-b border-gray-300 w-full z-10 shadow-md">
-        <h1 class="text-3xl font-semibold">Internet Requests</h1>
+    <header class="bg-white text-[#0c6980] sticky top-0 text-center p-4 border-b border-gray-300 w-full z-10 shadow-md">
+        <h1 class="text-xl md:text-2xl font-semibold">Internet Requests</h1>
     </header>
 
-    <section class="mx-auto p-6 my-6">
+    <section class="mx-auto p-6">
         <table id="internetRequests" class="row-border stripe hover border border-gray-300">
             <thead>
                 <tr>
@@ -61,7 +61,25 @@
             });
 
             function refresh() {
-                table.ajax.reload(null, false);
+                $.ajax({
+                    url: '/admin/requests/internet/show',
+                    method: 'GET',
+                    success: function (response) {
+                        response.data.forEach(function(row) {
+                            let DataExists = false;
+
+                            table.rows().data().each(function(CurrentData) {
+                                if (CurrentData.id === row.id) {
+                                    DataExists = true;
+                                }
+                            });
+
+                            if (DataExists != true) {
+                                table.row.add(row).draw();
+                            }
+                        });
+                    }
+                });
             }
 
             setInterval(refresh, 1000);
