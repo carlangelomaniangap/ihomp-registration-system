@@ -8,7 +8,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="bg-[#1486a2]">
     <main>
         @yield('content')
     </main>

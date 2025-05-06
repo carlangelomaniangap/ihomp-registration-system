@@ -4,49 +4,108 @@
 
 @section('content')
 
-    <div class="grid grid-cols-2">
-        
-        <div class="flex flex-col justify-center items-center">
+    <section class="relative min-h-screen flex items-center justify-center">
 
-            <div class="w-100 h-100 bg-[#21a1c2] shadow-lg py-4 px-12 rounded-lg">
-                <div class="text-gray-900 text-center py-4">
+        <div id="particles-js" class="absolute inset-0 z-0"></div>
+
+        <div class="relative z-10 flex justify-center items-center">
+
+            <div class="bg-[#0c6980]/30 backdrop-blur-xs w-100 h-100 shadow-lg py-4 px-12 rounded-lg">
+                <div class="text-white text-center py-4">
                     <h1 class="font-bold text-3xl">IHOMP</h1>
                     <h2 class="font-semibold text-2xl">Registration System</h2>
                 </div>
 
                 <form id="loginForm">
-
                     <div class="mt-2">
-                        <label for="biometricID" class="text-gray-900 font-semibold">Biometric ID <sup class="text-red-500">*</sup></label>
-                        <input type="number" id="biometricID" name="biometricID" class="w-full bg-white mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0c6980]" required>
+                        <label for="biometricID" class="text-white font-semibold">Biometric ID <sup class="text-red-500">*</sup></label>
+                        <input type="number" id="biometricID" name="biometricID" class="w-full mt-1 text-white bg-[#0c6980]/50 shadow-lg backdrop-blur-xs rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0c6980]" placeholder="1234" required>
                     </div>
 
                     <div class="mt-2">
-                        <label for="first_name" class="text-gray-900 font-semibold">First Name <sup class="text-red-500">*</sup></label>
-                        <input type="text" id="first_name" name="first_name" class="w-full bg-white mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0c6980]" autocomplete="off" required>
+                        <label for="first_name" class="text-white font-semibold">First Name <sup class="text-red-500">*</sup></label>
+                        <input type="text" id="first_name" name="first_name" class="w-full mt-1 text-white bg-[#0c6980]/50 shadow-lg backdrop-blur-xs rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0c6980]" autocomplete="off" placeholder="Juan" required>
                     </div>
 
                     <div class="mt-2">
-                        <label>
-                            <input type="checkbox" name="remember" id="remember"> Remember Me
+                        <label class="text-white">
+                            <input type="checkbox" name="remember" id="remember" class="accent-[#0c6980]"> Remember Me
                         </label>
                     </div>
 
                     <div class="mt-6">
-                        <button type="submit" class="w-full font-semibold bg-gray-900 text-white rounded px-2 py-2 hover:bg-gray-700 transition duration-300">Login</button>
+                        <button type="submit" class="w-full font-semibold bg-[#0c6980] text-white rounded px-2 py-2 hover:bg-[#085568] transition duration-300">Login</button>
                     </div>
                 </form>
             </div>
-            
         </div>
+    </section>
 
-        <div>
-            <img src="{{ asset('images/background.png') }}" alt="Background" class="w-full h-screen">
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.16.1/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 500,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#0c6980"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5
+                },
+                "size": {
+                    "value": 2,
+                    "random": true
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 100,
+                    "color": "#ffffff",
+                    "opacity": 0.5,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 1.5,
+                    "direction": "none",
+                    "out_mode": "out"
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": false,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": false,
+                        "mode": "push"
+                    }
+                },
+                "modes": {
+                    "repulse": {
+                        "distance": 100
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
