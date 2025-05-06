@@ -14,6 +14,7 @@
             <input type="hidden" name="biometricID" id="biometricID" value="{{ auth()->user()->biometricID }}">
             <input type="hidden" name="medical_doctor" id="medical_doctor" value="{{ auth()->user()->medical_doctor }}">
             <input type="hidden" name="first_name" id="first_name" value="{{ auth()->user()->first_name }}">
+            <input type="hidden" name="middle_name" id="middle_name" value="{{ auth()->user()->middle_name }}">
             <input type="hidden" name="last_name" id="last_name" value="{{ auth()->user()->last_name }}">
             <input type="hidden" name="birthday" id="birthday" value="{{ auth()->user()->birthday }}">
             <input type="hidden" name="sex" id="sex" value="{{ auth()->user()->sex }}">
@@ -29,22 +30,22 @@
 
             <div class="mt-4">
                 <label for="username" class="block font-semibold text-gray-700">Username <sup class="text-red-500">*</sup></label>
-                <input type="text" name="username" id="username" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
+                <input type="text" name="username" id="username" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" placeholder="juan" required>
             </div>
 
             <div class="mt-4">
                 <label for="password" class="block font-semibold text-gray-700">Password <sup class="text-red-500">*</sup></label>
-                <input type="password" name="password" id="password" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="password" name="password" id="password" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="password" required>
             </div>
 
             <div class="mt-4">
                 <label for="email" class="block font-semibold text-gray-700">Email <sup class="text-red-500">*</label>
-                <input type="email" name="email" id="email" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
+                <input type="email" name="email" id="email" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" placeholder="juan@example.com" required>
             </div>
 
             <div class="mt-4">
                 <label for="mobile_number" class="block font-semibold text-gray-700">Mobile Number <sup class="text-red-500">*</label>
-                <input type="tel" name="mobile_number" id="mobile_number" maxlength="11" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
+                <input type="tel" name="mobile_number" id="mobile_number" pattern="^09[0-9]{9}$" maxlength="11" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" placeholder="09123456789" required>
             </div>
 
             <div class="mt-4">
@@ -71,7 +72,7 @@
             <div class="mt-4">
                 <label for="pin_code" class="block font-semibold text-gray-700">Confirmed by IHOMP Technical on Duty <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Please enter PIN code</em>
-                <input type="password" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="password" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Pin Code" required>
             </div>
 
             <div class="mt-6 flex justify-center">
@@ -115,6 +116,7 @@
                     password: $('#password').val(),
                     medical_doctor: $('#medical_doctor').val(),
                     first_name: $('#first_name').val(),
+                    middle_name: $('#middle_name').val(),
                     last_name: $('#last_name').val(),
                     birthday: $('#birthday').val(),
                     sex: $('#sex').val(),
@@ -152,7 +154,7 @@
                                 cancelButtonText: 'Close',
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = `/request/system/print/${response.id}`;
+                                    window.location.href = `/user/request/system/print/${response.id}`;
                                 } else {
                                     window.location.href = response.redirect
                                 }

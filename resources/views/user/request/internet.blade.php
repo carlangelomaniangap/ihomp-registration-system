@@ -13,6 +13,7 @@
             <input type="hidden" name="role" id="role" value="{{ auth()->user()->role }}">
             <input type="hidden" name="biometricID" id="biometricID" value="{{ auth()->user()->biometricID }}">
             <input type="hidden" name="first_name" id="first_name" value="{{ auth()->user()->first_name }}">
+            <input type="hidden" name="middle_name" id="middle_name" value="{{ auth()->user()->middle_name }}">
             <input type="hidden" name="last_name" id="last_name" value="{{ auth()->user()->last_name }}">
             <input type="hidden" name="medical_doctor" id="medical_doctor" value="{{ auth()->user()->medical_doctor }}">
             <input type="hidden" name="employment_status" id="employment_status" value="{{ auth()->user()->employment_status }}">
@@ -65,7 +66,7 @@
             <div class="mt-4">
                 <label for="wifi_mac_address" class="block font-semibold text-gray-700">Wi-Fi MAC Address <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Example: AA:BB:CC:DD:EE:11</em>
-                <input type="text" name="wifi_mac_address" id="wifi_mac_address" maxlength="17" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" required>
+                <input type="text" name="wifi_mac_address" id="wifi_mac_address" pattern="^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$" maxlength="17" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" autocomplete="off" placeholder="AA:BB:CC:DD:EE:11" required>
             </div>
 
             <div class="mt-4 p-2 border border-gray-300 rounded">
@@ -83,7 +84,7 @@
             <div class="mt-4">
                 <label for="pin_code" class="block font-semibold text-gray-700">Confirmed by IHOMP Technical on Duty <sup class="text-red-500">*</sup></label>
                 <em class="block text-gray-500 text-sm">Please enter PIN code</em>
-                <input type="password" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <input type="password" name="pin_code" id="pin_code" class="w-full mt-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Pin Code" required>
             </div>
 
             <div class="mt-6 flex justify-center">
@@ -127,6 +128,7 @@
                     role: $('#role').val(),
                     biometricID: $('#biometricID').val(),
                     first_name: $('#first_name').val(),
+                    middle_name: $('#middle_name').val(),
                     last_name: $('#last_name').val(),
                     medical_doctor: $('#medical_doctor').val(),
                     employment_status: $('#employment_status').val(),
@@ -157,7 +159,7 @@
                                 cancelButtonText: 'Close',
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    window.location.href = `/request/internet/print/${response.id}`;
+                                    window.location.href = `/user/request/internet/print/${response.id}`;
                                 } else {
                                     window.location.href = response.redirect
                                 }
