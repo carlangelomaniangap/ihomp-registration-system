@@ -22,6 +22,7 @@ class InternetRequestController extends Controller {
             'role' => 'required|string',
             'biometricID' => 'required|numeric',
             'first_name' => 'required|string',
+            'middle_name' => 'required|string',
             'last_name' => 'required|string',
             'medical_doctor' => 'required|in:Yes,No',
             'employment_status' => 'required|in:Regular/Permanent,Job Order,Temporary/COS,Medical Intern',
@@ -52,6 +53,7 @@ class InternetRequestController extends Controller {
             'request_number' => $RequestNumber,
             'biometricID' => $request->input('biometricID'),
             'first_name' => $request->input('first_name'),
+            'middle_name'=> $request->input('middle_name'),
             'last_name' => $request->input('last_name'),
             'medical_doctor' => $request->input('medical_doctor'),
             'employment_status' => $request->input('employment_status'),
@@ -62,6 +64,7 @@ class InternetRequestController extends Controller {
             'device_type' => $request->input('device_type'),
             'wifi_mac_address' => $request->input('wifi_mac_address'),
             'pin_code' => $request->input('pin_code'),
+            'user_id' => $user->id
         ]);
 
         return response()->json([
@@ -72,5 +75,22 @@ class InternetRequestController extends Controller {
             'last_name' => $user->last_name,
             'redirect' => route('user.request.internet')
         ]);
+    }
+
+    public function print($id){
+
+        $user = Auth::user();
+
+        if ($user->role === 'user') {
+            $internetRequest = InternetRequest::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+
+            $admin = User::where('role', 'admin')->where('biometricID', $internetRequest->pin_code)->first();
+
+            if ($internetRequest->pin_code === $admin->biometricID) {
+                $adminName = $admin;
+            }
+        }
+
+        return view('print.print-internet-request', compact('internetRequest', 'adminName'));
     }
 }

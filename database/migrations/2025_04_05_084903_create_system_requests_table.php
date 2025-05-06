@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('medical_doctor', ['Yes', 'No']);
             $table->string('first_name');
+            $table->string('middle_name');
             $table->string('last_name');
             $table->date('birthday');
             $table->enum('sex', ['Male', 'Female']);
@@ -31,11 +32,13 @@ return new class extends Migration
             $table->string('position');
             $table->string('prc_license_number');
             $table->date('expiration_date');
-            $table->enum('employment_status', ['Regular/Permanent','Job Order','Temporary/COS','Medical Intern']);
-            $table->enum('systems_to_be_enrolled', ['EMR-SDN','HIMS','PACS-RIS']);
+            $table->enum('employment_status', ['Regular/Permanent', 'Job Order', 'Temporary/COS', 'Medical Intern']);
+            $table->string('systems_to_be_enrolled');
             $table->enum('emr_sdn_user_profile', ['User', 'Pharmacy', 'Social Service', 'Cashier', 'Nurse', 'Doctor']);
             $table->unsignedInteger('pin_code');
             $table->timestamps();
+
+            $table->foreignId('user_id')->constrained();
         });
     }
 

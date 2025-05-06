@@ -21,6 +21,7 @@ class User extends Authenticatable
         'role',
         'biometricID',
         'first_name',
+        'middle_name',
         'last_name',
         'birthday',
         'sex',
@@ -37,6 +38,14 @@ class User extends Authenticatable
         'expiration_date',
         'emr_sdn_user_profile',
     ];
+
+    public function internetRequests() {
+        return $this->hasMany(InternetRequest::class);
+    }
+
+    public function systemRequests() {
+        return $this->hasMany(SystemRequest::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

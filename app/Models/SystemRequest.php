@@ -17,6 +17,7 @@ class SystemRequest extends Model
         'password',
         'medical_doctor',
         'first_name',
+        'middle_name',
         'last_name',
         'birthday',
         'sex',
@@ -33,5 +34,10 @@ class SystemRequest extends Model
         'systems_to_be_enrolled',
         'emr_sdn_user_profile',
         'pin_code',
+        'user_id',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -22,17 +22,17 @@
         </div>
 
         <div class="w-full max-w-3xl print:max-w-2xl mx-auto my-12 border p-24 print:my-0 print:border-0 print:p-0">
-            <div class="flex justify-between">
-                <img src="" alt="Logo">
+            <div class="flex items-center justify-center gap-x-3.5">
+                <img src="{{ asset('images/BGHMC.png') }}" alt="BGHMC Logo" class="h-12 w-12">
 
-                <div class="flex flex-col justify-center items-center">
-                    <h1 class="font-bold text-lg">BATAAN GENERAL HOSPITAL AND MEDICAL CENTER</h1>
-                    <P class="text-xs">Balanga City, Bataan</P>
-                    <p class="text-xs">ISO-QMS 9001:2015 Certified</p>
-                </div>
-                
+                <h3 class="font-bold text-lg">BATAAN GENERAL HOSPITAL AND MEDICAL CENTER</h3>
 
-                <img src="" alt="Logo">
+                <img src="{{ asset('images/DOH.png') }}" alt="DOH Logo" class="h-12 w-12">
+            </div>
+
+            <div class="text-center text-xs">
+                <p>Balanga City, Bataan</p>
+                <p>ISO-QMS 9001:2015 Certified</p>
             </div>
 
             <div>

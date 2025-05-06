@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('request_number')->unique();
             $table->unsignedInteger('biometricID');
             $table->string('first_name');
+            $table->string('middle_name');
             $table->string('last_name');
             $table->enum('medical_doctor', ['Yes', 'No']);
             $table->enum('employment_status', ['Regular/Permanent','Job Order','Temporary/COS','Medical Intern']);
@@ -28,6 +29,8 @@ return new class extends Migration
             $table->string('wifi_mac_address');
             $table->unsignedInteger('pin_code');
             $table->timestamps();
+
+            $table->foreignId('user_id')->constrained();
         });
     }
 

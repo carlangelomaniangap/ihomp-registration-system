@@ -15,6 +15,7 @@ class InternetRequest extends Model
         'request_number',
         'biometricID',
         'first_name',
+        'middle_name',
         'last_name',
         'medical_doctor',
         'employment_status',
@@ -25,5 +26,10 @@ class InternetRequest extends Model
         'device_type',
         'wifi_mac_address',
         'pin_code',
+        'user_id',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

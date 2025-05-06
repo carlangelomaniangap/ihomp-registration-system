@@ -26,6 +26,7 @@ class SystemRequestController extends Controller {
             'password' => 'required|string',
             'medical_doctor' => 'required|string|in:Yes,No',
             'first_name' => 'required|string',
+            'middle_name' => 'required|string',
             'last_name' => 'required|string',
             'birthday' => 'required|date',
             'sex' => 'required|string',
@@ -60,6 +61,7 @@ class SystemRequestController extends Controller {
             'password' => $request->input('password'),
             'medical_doctor' => $request->input('medical_doctor'),
             'first_name' => $request->input('first_name'),
+            'middle_name'=> $request->input('middle_name'),
             'last_name' => $request->input('last_name'),
             'birthday' => $request->input('birthday'),
             'sex' => $request->input('sex'),
@@ -76,6 +78,7 @@ class SystemRequestController extends Controller {
             'systems_to_be_enrolled' => implode(',', $request->input('systems_to_be_enrolled')),
             'emr_sdn_user_profile' => $request->input('emr_sdn_user_profile'),
             'pin_code' => $request->input('pin_code'),
+            'user_id' => $user->id
         ]);
 
         return response()->json([
@@ -86,5 +89,22 @@ class SystemRequestController extends Controller {
             'last_name' => $user->last_name,
             'redirect' => route('user.request.system')
         ]);
+    }
+
+    public function print($id){
+
+        $user = Auth::user();
+
+        if ($user->role === 'user') {
+            $systemRequest = SystemRequest::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        
+            $admin = User::where('role', 'admin')->where('biometricID', $systemRequest->pin_code)->first();
+
+            if ($systemRequest->pin_code === $admin->biometricID) {
+                $adminName = $admin;
+            }
+        }
+
+        return view('print.print-system-request', compact('systemRequest', 'adminName'));
     }
 }
