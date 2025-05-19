@@ -8,16 +8,16 @@
 
         <div id="particles-js" class="absolute inset-0 z-0"></div>
 
-        <div class="relative z-10 flex justify-center items-center">
+        <div class="relative z-10">
 
-            <div class="bg-[#0c6980]/30 backdrop-blur-xs w-100 h-100 shadow-lg py-4 px-12 rounded-lg">
-                <div class="text-white text-center py-4">
+            <div class="bg-[#0c6980]/30 backdrop-blur-xs shadow-lg p-8 rounded-lg">
+                <div class="text-white text-center mb-6">
                     <h1 class="font-bold text-3xl">IHOMP</h1>
                     <h2 class="font-semibold text-2xl">Registration System</h2>
                 </div>
 
                 <form id="loginForm">
-                    <div class="mt-2">
+                    <div>
                         <label for="biometricID" class="text-white font-semibold">Biometric ID <sup class="text-red-500">*</sup></label>
                         <input type="number" id="biometricID" name="biometricID" class="w-full mt-1 text-white bg-[#0c6980]/50 shadow-lg backdrop-blur-xs rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0c6980]" placeholder="1234" required>
                     </div>
@@ -33,7 +33,7 @@
                         </label>
                     </div>
 
-                    <div class="mt-6">
+                    <div class="mt-6 mb-2">
                         <button type="submit" class="w-full font-semibold bg-[#0c6980] text-white rounded px-2 py-2 hover:bg-[#085568] transition duration-300">Login</button>
                     </div>
                 </form>
